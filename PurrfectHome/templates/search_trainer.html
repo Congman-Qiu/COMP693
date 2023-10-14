@@ -1,0 +1,67 @@
+{% extends "layout.html" %} {% block search_content %} {% endblock %} {% block
+title %} Search Trainer {% endblock %}{% block content %}
+
+<form
+  action="/admin/view_trainer_classes_search/"
+  method="POST"
+  class="row g-3"
+>
+  <div class="col-auto">
+    <input
+      type="text"
+      class="form-control"
+      name="trainer"
+      id="trainer"
+      placeholder="Trainer ID or Name"
+    />
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Search</button>
+  </div>
+</form>
+
+{% if not trainerlist %}
+<span class="news-empty">No results</span>
+
+{% else %}
+
+<h2>Trainers</h2>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover mt-3">
+      <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Date of Birth</th>
+        <th></th>
+      </tr>
+      {% for trainer in trainerlist %}
+      <tr>
+        <td>
+            {{ trainer[0] }}
+        </td>
+        <td>{{ trainer[1] }}</td>
+        {% set fullname = trainer[3] + " " + trainer[4] %}
+        <td>{{fullname}}</td>
+        <td>{% if trainer[5] %} {{ trainer[5].strftime('%d/%m/%Y')}} {% endif %}</td>
+        <td>
+          <a href="{{ url_for('view_trainer_classes', trainer=trainer[1]) }}" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip"
+            data-bs-placement="bottom" title="See classes"> View Classes</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<div class="row mt-3">
+  <div class="col-auto">
+    <button onclick="history.back()" class="btn btn-outline-primary">
+      Go Back
+    </button>
+  </div>
+</div>
+
+{% endblock %}

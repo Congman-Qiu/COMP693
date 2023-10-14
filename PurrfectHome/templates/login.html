@@ -1,0 +1,13 @@
+{% extends "layout.html" %} {% block title %} Login {% endblock %} {% block content %} <div class="text-center">
+    <main class="form-signin w-100 m-auto">
+        <form action="/login" method="POST" class="g-3">
+            <img class="mb-4 login-logo" src="/static/images/lf-logo.png" alt="" width="72" height="57">
+            <div>
+                <input type="text" class="form-control mt-3 mb-3 text-center" name="username" id="username" placeholder="Enter you username" required> {%
+                if login_error %} <p class="error-message">Username cannot be found!</p> {% endif %}
+            </div>
+        
+            <button type="submit" class="w-100 btn btn-primary">Login</button>
+        </form>
+    </main>
+</div> {% endblock %}

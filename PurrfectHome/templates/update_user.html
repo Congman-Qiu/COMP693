@@ -1,0 +1,215 @@
+{% extends "layout.html" %} {% block title %} Update User {% endblock %} {%
+block content %}
+
+<h3>Update User</h3>
+
+<span class="text-sm"
+  ><span class="required-field">*</span>Required fields</span
+>
+
+<br />
+
+{% if authorized %}
+<form action="/user/update" method="POST" class="row g-3 pt-3">
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <input
+          type="hidden"
+          name="user_id"
+          {%
+          if
+          user
+          %}
+          value="{{user[0]}}"
+          {%
+          endif
+          %}
+        />
+        <div>
+          <label for="first_name" class="form-label"
+            >First Name<span class="required-field">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="first_name"
+            name="first_name"
+            {%
+            if
+            user
+            %}
+            value="{{user[3]}}"
+            placeholder="First Name"
+            {%
+            endif
+            %}
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div>
+        <label for="last_name" class="form-label"
+          >Last Name<span class="required-field">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="last_name"
+          name="last_name"
+          {%
+          if
+          user
+          %}
+          value="{{user[4]}}"
+          placeholder="Last Name"
+          {%
+          endif
+          %}
+          required
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label for="date_of_birth" class="col-sm-12 form-label"
+          >Date of Birth<span class="required-field">*</span></label
+        >
+        <div class="col-md-10">
+          <input
+            type="date"
+            name="date_of_birth"
+            id="date_of_birth"
+            class="form-control"
+            {%
+            if
+            user
+            %}
+            value="{{user[5]}}"
+            {%
+            endif
+            %}
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div>
+        <label for="house_number_name" class="form-label"
+          >House Number/ Name</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="house_number_name"
+          name="house_number_name"
+          {%
+          if
+          user
+          %}
+          value="{{user[6]}}"
+          placeholder="House Number/ Name"
+          {%
+          endif
+          %}
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div>
+        <label for="street" class="form-label">Street</label>
+        <input
+          type="text"
+          class="form-control"
+          id="street"
+          name="street"
+          {%
+          if
+          user
+          %}
+          value="{{user[7]}}"
+          placeholder="Street"
+          {%
+          endif
+          %}
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label for="town" class="form-label">Town</label>
+        <input
+          type="text"
+          class="form-control"
+          id="town"
+          name="town"
+          {%
+          if
+          user
+          %}
+          value="{{user[8]}}"
+          placeholder="Town"
+          {%
+          endif
+          %}
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div>
+        <label for="city" class="form-label">City</label>
+        <input
+          type="text"
+          class="form-control"
+          id="city"
+          name="city"
+          {%
+          if
+          user
+          %}
+          value="{{user[9]}}"
+          placeholder="City"
+          {%
+          endif
+          %}
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div>
+        <label for="postal_code" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          id="postal_code"
+          pattern="[0-9]{4}"
+          name="postal_code"
+          {%
+          if
+          user
+          %}
+          value="{{user[10]}}"
+          title="Postal code must be a 4-digit number"
+          placeholder="0000"
+          {%
+          endif
+          %}
+        />
+      </div>
+    </div>
+    <div class="row pt-3">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-sm btn-primary mb-3">
+          Update User
+        </button>
+        <a href="/dashboard" class="btn btn-sm btn-secondary mb-3">Cancel</a>
+      </div>
+    </div>
+  </div>
+</form>
+{% else %}
+<p>Unauthorized Access!</p>
+{% endif %} {% endblock %}

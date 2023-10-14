@@ -1,0 +1,208 @@
+{% extends "layout.html" %} {% block title %} Subscriptions {% endblock %} {% block content %} <h3>Membership Subscriptions</h3> 
+{% for message in get_flashed_messages()%} 
+    <div class="alert alert-primary alert-dismissible fade show" role="alert"> 
+{{ message }} 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div> {% endfor %} <br /> 
+    {% if authorized %} 
+    <div class="row">
+    <!-- Add a Subscription -->
+    <div class="col-md-6">
+        <div class="card">
+            {% if add_subscription == "1" %}
+            <h5 class="card-header">Add a Lincoln Fitness Subscription</h5>
+            <div class="card-body">
+                <span class="text-sm"><span class="required-field">*</span>Required fields</span>
+                <form action="/subscription/add" method="POST" class="row g-3 pt-3">
+                    <input type="hidden" value="{{member_id}}" name="member_id">
+                    <div class="row mt-4">                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="start_date" class="col-sm-12 form-label">Start Date<span
+                                        class="required-field">*</span></label>
+                                <div class="col-md-10">
+                                    <input type="date" name="start_date" id="start_date" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <h4 class="mb-3">Payment </h4>
+                            <div class="my-3">
+                                <div class="form-check">
+                                    <input 
+                                        id="credit" 
+                                        name="payment_method"
+                                        value="credit_card" 
+                                        type="radio" 
+                                        class="form-check-input" 
+                                        checked="" 
+                                        required=""
+                                        onclick="showCreditCard();">
+                                    <label class="form-check-label" for="credit">Credit card</label>
+                                </div>
+                                <div class="form-check">
+                                    <input 
+                                        id="debit" 
+                                        name="payment_method" 
+                                        value="bank_account"
+                                        type="radio"
+                                        class="form-check-input" 
+                                        required=""
+                                        onClick="showBankAccount();">
+                                    <label class="form-check-label" for="debit">Online Bank Transfer</label>
+                                </div>
+                            </div>
+                            <!-- credit card payment -->
+                            <div id="credit_card">
+                                <div class="row gy-3">
+                                    <div class="col-md-6">
+                                        <label for="cc-name" class="form-label"><span class="required-field">*</span>Name on card</label>
+                                        <input type="text" class="form-control" name="card_name" id="card_name" placeholder="Your name on card" required="">
+                                        <small class="text-muted">Full name as displayed on card</small>
+                                        <div class="invalid-feedback"> Name on card is required </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="cc-number" class="form-label"><span class="required-field">*</span>Credit card number</label>
+                                        <input type="text" class="form-control" name="card_number" id="card_number" placeholder="0000-0000-0000-0000" required="">
+                                        <div class="invalid-feedback"> Credit card number is required </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="cc-expiration" class="form-label"><span class="required-field">*</span>Expiration</label>
+                                        <input type="text" class="form-control" name="card_expiration" id="card_expiration" placeholder="MM/YYYY" required="">
+                                        <div class="invalid-feedback"> Expiration date required </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="cc-cvv" class="form-label"><span class="required-field">*</span>CVV</label>
+                                        <input type="text" class="form-control" name="card_cvv" id="card_cvv" placeholder="123" required="">
+                                        <div class="invalid-feedback"> Security code required </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- online bank transfer -->
+                            <div id="bank_account">
+                                <div class="row gy-3">
+                                    <div class="col-md-6">
+                                        <label for="cc-name" class="form-label"><span class="required-field">*</span>Bank Name</label>
+                                        <input type="text" class="form-control" name="bank_name" id="bank_name" placeholder="e.g. ANZ" required="">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="cc-number" class="form-label"><span class="required-field">*</span>Account Number</label>
+                                        <input type="text" class="form-control" name="account_number" id="account_number" placeholder="Your Customer Number" required="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <span class="text-sm"> Paying today: <b> ${{subscription_fee}}</b></span><br>
+                            <div class="col-md-12 mt-2">
+                                <button type="submit" class="btn btn-sm btn-primary mb-3">Pay</button>
+                                <a href="/dashboard" class="btn btn-sm btn-secondary mb-3">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <h5 class="card-header">Your Lincoln Fitness Subscription</h5>
+                {% if subscription %}
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Subscription <b class="float-end">FitPass30</b></li>
+                        <li class="list-group-item">Started Date <b class="float-end">{{subscription[0][1]}}</b></li>
+                        <li class="list-group-item">Expiry Date <b class="float-end">{{subscription[0][2]}}</b></li>
+                        <li class="list-group-item">Status
+                            {% set date_diff = ((subscription[0][2]) - today_date).days %}
+                            {% if date_diff > 0 %}
+                                <span class="badge bg-success float-end">Active</span>
+                            {% else %}
+                                <span class="badge bg-danger float-end">Expired</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <br/>
+
+                    {% if date_diff <= 14 %}
+                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#renewConfirmation">Renew</button>
+                    {% endif %}
+                    <a href="/dashboard" class="btn btn-sm btn-secondary">Dashboard</a>
+                    
+                    <!-- renew confirmation modal -->
+                    <form action="/subscription/renew" method="POST" class="row g-3 pt-3">
+                        <div class="modal fade" id="renewConfirmation" tabindex="-1" aria-labelledby="renewConfirmationLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="renewConfirmationLabel">Renew Subscription</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want pay and renew subscription?</p>
+                                        <div class="mb-3">
+                                            <label for="start_date" class="col-sm-12 form-label">Select Start Date<span class="required-field">*</span></label>
+                                            <div class="col-md-6">
+                                                <input type="date" name="start_date" id="start_date" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body text-center">
+                                                <p class="text-dark-light">Your saved payment details</p> {% if subscription[0][3] == 'Credit Card' %} <span>Payment Method <span
+                                                        class="badge bg-secondary">{{ subscription[0][3] }}</span></span>&nbsp; <span>number ends with <span
+                                                        class="badge bg-secondary">{{ subscription[0][6] }}</span></span><br /> {% else %} <span>Bank <span
+                                                        class="badge bg-secondary">{{ subscription[0][4] }}</span></span> <br />
+                                                <span>Account number <span class="badge bg-secondary">{{ subscription[0][5] }}</span></span><br /> {% endif %}
+                                                <span>Paying today <span class="badge bg-secondary">${{ subscription_fee }}</span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-danger">Renew</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                {% else %}
+                <div class="card-body">
+                <p>You do not have an active subscription.</p>
+                {% endif %}
+            {% endif %}
+        </div>
+        <script>
+            $(document).ready(function () {
+                showCreditCard();                
+            });
+
+            function showCreditCard() {
+                    document.getElementById("credit_card").style.display = "block";
+                    document.getElementById("bank_account").style.display = "none";
+                    document.getElementById("card_name").required = true;
+                    document.getElementById("card_number").required = true;
+                    document.getElementById("card_expiration").required = true;
+                    document.getElementById("card_cvv").required = true;
+                    document.getElementById("bank_name").required = false;
+                    document.getElementById("account_number").required = false;
+                }
+
+                function showBankAccount() {
+                    document.getElementById("credit_card").style.display = "none";
+                    document.getElementById("bank_account").style.display = "block";
+                    document.getElementById("card_name").required = false;
+                    document.getElementById("card_number").required = false;
+                    document.getElementById("card_expiration").required = false;
+                    document.getElementById("card_cvv").required = false;
+                    document.getElementById("bank_name").required = true;
+                    document.getElementById("account_number").required = true;
+                }
+        </script>
+    </div>
+    
+</div> {% else %} <p>Unauthorized Access!</p> 
+
+{% endif %} 
+{% endblock %}
+

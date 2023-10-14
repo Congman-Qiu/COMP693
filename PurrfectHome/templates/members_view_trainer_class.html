@@ -1,0 +1,110 @@
+{% extends "layout.html" %} {% block title %} Trainers {% endblock %} {% block
+content %}
+{% if trainings %}
+<h2>Personal training sessions of <span>{{trainings[0][3]}}</span></h2>
+
+<br />
+
+<span class="text-sm">*Training duration is 60 minutes</span>
+{% if not has_active_subscription %}
+<p><span class="news-empty">You don't have an active subscription to make a booking.</span></p>
+{% endif %}
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover">
+      <tr>
+        <th>Date</th>
+        <th>Time*</th>
+        <th>Class</th>
+        <th>Room</th>
+        <th>Fee</th>
+        <th></th>
+      </tr> 
+      {% for training in trainings %} 
+      <form action="/member/viewtrainer/{{training[0]}}" method="POST">
+        <input type="hidden" name="classid" value="{{training[9]}}" />
+          <tr>
+            <td>{{training[5].strftime('%d/%m/%Y')}}</td>
+            <td>{{training[6]}}</td>
+            <td>{{training[1]}}</td>
+            <td>{{training[2]}}</td>
+            <td>{{training[4]}}</td>
+            <!-- <td>{% if training[8] < 0 %} - {% else %} {{training[8]}} {% endif %}</td> -->
+            <td>
+              {% if training[8] < 1 %}
+              <span class="news-empty">Fully Booked!</span>
+              {% elif has_active_subscription and training[10] == 0  %}
+              <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#bookingConfirmation{{training[9]}}">Book</button>
+              {% elif training[10] == 1 %}
+              <button type="button" class="btn btn-outline-danger float-end" data-bs-toggle="modal" data-bs-target="#cancellationConfirmation{{training[9]}}">Cancel</button>
+              <button type="button" style="margin-right:5px;" class="btn btn-outline-secondary float-end" disabled>Booked</button>
+              {% endif %}
+            </td>
+          </tr> 
+          <!-- Booking confirmation modal -->
+          <div class="modal fade" id="bookingConfirmation{{training[9]}}" tabindex="-1" aria-labelledby="bookingConfirmationLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="bookingConfirmationLabel">Confirm Booking</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {% if subscription %}
+                <div class="modal-body text-center">
+                  <p>Are you sure you want book this training session?</p>
+                  <p>Your saved payment details</p> 
+                  {% if subscription[0][1] == 'Credit Card' %} <span>Payment Method <span
+                      class="badge bg-secondary">{{ subscription[0][1] }}</span></span>&nbsp; <span>number ends with <span
+                      class="badge bg-secondary">{{ subscription[0][4] }}</span></span><br /> {% else %} <span>Bank <span
+                      class="badge bg-secondary">{{ subscription[0][2] }}</span></span> <br />
+                  <span>Account number <span class="badge bg-secondary">{{ subscription[0][3] }}</span></span><br /> {% endif %}
+                  <span>Paying today <span class="badge bg-secondary">${{training[4]}}</span></span>
+                </div>
+                {% endif %}
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-danger">Book</a>
+                </div>
+              </div>
+            </div>
+          </div>
+      </form>
+    
+      <form action="/member/cancel_booking/{{training[9]}}" method="POST">
+        <!-- Booking cancellation confirmation modal -->
+        <div class="modal fade" id="cancellationConfirmation{{training[9]}}" tabindex="-1" aria-labelledby="cancellationConfirmationLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="cancellationConfirmationLabel">Confirm Cancellation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure you want cancel this booking?</p>
+              </div> 
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Confirm Cancellation</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% else %}
+<span class="news-empty">No personal training sessions found</span>
+{% endif %}
+
+<div class="col-auto mt-3">
+  <button onclick="history.back()" class="btn btn-outline-primary">
+    Go Back
+  </button>
+</div>
+
+{% endblock %}

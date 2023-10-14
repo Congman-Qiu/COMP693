@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block title %} Class sessions {% endblock %} 
+{% block content %} 
+
+  <h2>Group Class sessions- view all group classes in our gym</h2>
+  <p>*Class duration is 60 minutes</p>
+  <table class="table table-striped table-hover">
+
+    <tr><th>Class Name</th><th>Trainer Name</th><th>Room Name</th><th>Room Type</th><th>Fee</th><th>Time*</th><th>Book</th></tr>
+  
+    {% for class in classList %}
+    <td>{{class[1]}}</td><td>{{class[11]}} {{class[12]}}</td><td>{{class[22]}}</td><td>{{class[21]}}</td><td>{{class[5]}}</td><td>{{class[6]}}</td>
+    <!-- Booking function will be added in sprint2. Class capacity may need to be added in db. -->
+    <td><button>BOOK NOW</button></td>
+  </tr>
+    {% endfor %}
+  </table>
+  </div>
+  
+  {% endblock %}

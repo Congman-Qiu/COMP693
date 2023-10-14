@@ -1,0 +1,69 @@
+/*
+    COMP639 - Studio Project
+    GROUP 12
+*/
+
+body {
+  font-family: 'Nunito', sans-serif !important;
+}
+
+.text-sm {
+  font-size: small;
+}
+
+.text-dark-light{
+  color: #cccccc;
+}
+
+.footer-container {
+  text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  font-size: small;
+}
+
+.required-field {
+  color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: small;
+}
+
+.news-sent {
+  font-size: smaller;
+  color: #d78521;
+}
+
+.news-empty {
+  font-size: small;
+  color: #d78521;
+}
+
+.form-signin{
+  max-width: 300px !important;
+}
+
+.login-logo{
+  width: 100px;
+  height: auto !important;
+}
+
+.notify-label{
+  color: rgb(112, 112, 112);
+  font-size: small;
+}
+
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bs-primary);
+}
+
+.dashboard-image{
+  border-radius: 15px;;
+}
+
+.personal-details{
+  font-size: medium !important;
+  font-weight: normal !important;
+}

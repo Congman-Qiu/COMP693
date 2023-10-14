@@ -1,0 +1,103 @@
+{% extends "layout.html" %} {% block title %} Attendance Report {% endblock %} {%
+    block content %}
+
+<div class="row">
+  <h2>Attendance Report</h2>
+  <form class="row" method="post" action="/admin/view_attendance/">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="from_date" class="col-form-label">From</label>
+      </div>
+      <div class="col-auto">
+        <input type="date" class="form-control" name="time_a" required>
+      </div>
+      <div class="col-auto">
+        <label for="to_date" class="col-form-label">To</label>
+      </div>
+      <div class="col-auto">
+        <input type="date" class="form-control" name="time_b" required>
+      </div>
+      <div class="col-auto">
+      <input type="submit" class="btn btn-primary" value="Search">
+      </div>  
+    </div>
+  </form>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">
+    <span>Classes and specialised training attendance</span>
+  </div>
+  <div class="card-body">
+    {% if attendanceList %}
+    <table class="table table-hover">
+      <tr>
+        <th nowrap>Class ID</th>
+        <th nowrap>Class Name</th>
+        <th nowrap>Class Type</th>
+        <th nowrap>Room Name</th>
+        <th nowrap>Date Attended</th>
+        <th nowrap>Time Attended</th>
+        <th nowrap>Number of Attendees</th>
+        <th></th>
+      </tr>
+    
+      {% for result in attendanceList %}
+
+      <tr>
+        <td>{{result[0]}}</td>
+        <td>{{result[1]}}</td>
+        <td>{{result[2]}}</td>
+        <td>{{result[3]}}</td> 
+        <td>{% if result[4] %} {{result[4].strftime('%d/%m/%Y')}} {% endif %}</td> 
+        <td>{{result[5]}}</td> 
+        <td>{{result[6]}}</td> 
+        <td>
+            <a class="btn btn-sm btn-primary float-end" href="/admin/view_attendance/{{result[0]}}">View</a>
+        </td> 
+      </tr> 
+      {% endfor %}
+    </table> 
+    {% else %}
+    <span class="news-empty">No attendance records found.</span>
+    {% endif %}
+  </div>
+</div>
+<div class="card mt-3">
+  <div class="card-header">
+  <span>General Attendance</span>
+  </div>
+  <div class="card-body">
+    {% if gymattendance %}
+    <table class="table table-hover">
+        <tr>
+            <th nowrap>Attendance Type</th>
+            <th nowrap>Room Name</th>
+            <th nowrap>Date Attended</th>
+            <th nowrap>Number of Attendees</th>
+            <th></th>
+        </tr>
+      
+        {% for result in gymattendance %}
+  
+        <tr>
+          <td>{{result[0]}}</td>
+          <td>{{result[1]}}</td>
+          <td>{% if result[2] %}{{result[2].strftime('%d/%m/%Y')}}{% endif %}</td>
+          <td>{{result[4]}}</td> 
+          <td><a class="btn btn-sm btn-primary float-end" href="/admin/gym_attendees/{{result[2]}}">View</a>
+        </tr> 
+        {% endfor %}
+      </table> 
+      {% else %}
+      <span class="news-empty">No attendance records found.</span>
+      {% endif %}
+    </div>
+  </div>
+   
+    <div class="row mt-3">
+      <div class="col-md-12">
+        <button onclick="history.back()" class="btn btn-outline-primary"> Go Back </button>
+      </div>
+    </div> 
+  {% endblock %}

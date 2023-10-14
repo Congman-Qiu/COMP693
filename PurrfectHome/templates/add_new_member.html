@@ -1,0 +1,130 @@
+{% extends "layout.html" %} {% block title %} Add member {% endblock %} {% block
+content %} {% for message in get_flashed_messages()%}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %}
+
+<div>
+  <h2>Add member</h2>
+  <span class="text-sm"
+    ><span class="required-field">*</span>Required fields</span
+  >
+</div>
+<div class="card">
+  <div class="card-body">
+    <form class="row g-3" method="post" action="/admin/add_new_member_db/">
+      <div class="col-md-6">
+        <label for="validationDefault01" class="form-label"
+          ><span class="required-field">*</span>Username</label
+        >
+        <input
+          name="username"
+          type="text"
+          class="form-control"
+          id="inputusername4"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="validationDefault05" class="form-label"
+          ><span class="required-field">*</span>Date of Birth
+          <small>/ Must be over 18 year-old</small></label
+        >
+        <input
+          name="dateofbirth"
+          type="date"
+          class="form-control"
+          id="inputdateofbirth4"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="validationDefault03" class="form-label"
+          ><span class="required-field">*</span>First Name</label
+        >
+        <input
+          name="firstname"
+          type="text"
+          class="form-control"
+          id="inputfirstname4"
+          required
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="validationDefault04" class="form-label"
+          ><span class="required-field">*</span>Family Name</label
+        >
+        <input
+          name="familyname"
+          type="text"
+          class="form-control"
+          id="inputfamilyname4"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="validationDefault06" class="form-label"
+          >House number/ Name</label
+        >
+        <input
+          name="housenumbername"
+          type="text"
+          class="form-control"
+          id="inputhousenumbername4"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="validationDefault07" class="form-label">Street</label>
+        <input
+          name="street"
+          type="text"
+          class="form-control"
+          id="inputstreet4"
+        />
+      </div>
+      <div class="col-md-4">
+        <label for="validationDefault08" class="form-label">Town</label>
+        <input name="town" type="text" class="form-control" id="inputtown4" />
+      </div>
+      <div class="col-md-4">
+        <label for="validationDefault09" class="form-label">City</label>
+        <input name="city" type="text" class="form-control" id="inputcity4" />
+      </div>
+
+      <div class="col-md-4">
+        <label id="postalcode" for="validationDefault10" class="form-label"
+          >Postal Code</label
+        >
+        <input
+          name="postalcode"
+          type="txt"
+          class="form-control"
+          id="postalcode"
+          placeholder="0000"
+          pattern="[0-9]{4}"
+          title="Postal code must be a 4-digit number"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <button type="submit" class="btn btn-primary">Add this member</button>
+        &nbsp;
+        <a class="btn btn-outline-secondary" href="{{ url_for('dashboard') }}"
+          >Cancel</a
+        >
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "layout.html" %} {% block title %} View Member {% endblock %} {% block content %} 
+<div>
+    <h2>Trainee Details</h2>
+</div>
+{% if member %}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <span><b>Full Name</b></span>
+                <span class="badge badg text-bg-light personal-details mb-1">{{member[3]}} {{member[4]}}</span> <br>
+                <span><b>Location</b></span>
+                <span class="badge badg text-bg-light personal-details mb-1">{% if member[8] %} <span>{{member[8]}},</span> {% endif %} <span>{{member[9]}} {{member[10]}}</span></span> <br>
+                <span><b>Birth Year</b></span>
+                <span class="badge badg text-bg-light personal-details mb-1">{{member[5].strftime('%Y')}}</span> <br>
+                <span class="text-sm">* Due to privacy reasons, full trainee details are not available. Please contact admin for more information.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+<div class="row pt-3">
+    <div class="col-md-12">
+        <button onclick="history.back()" class="btn btn-outline-primary"> Go Back </button>
+    </div>
+</div> 
+{% endblock %}

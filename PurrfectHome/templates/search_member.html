@@ -1,0 +1,133 @@
+{% extends "layout.html" %} {% block title %} Search Member {% endblock %} {%
+block content %}
+<div class="mb-3">
+  <form class="row g-3" method="post" action="/admin/manage_member/">
+    <div class="col-auto">
+      <label for="inputPassword2" class="visually-hidden">Password</label>
+      <input type="text" class="form-control" name="search" placeholder="Member ID or Name" required>
+    </div>
+    <div class="col-auto">
+      <input type="submit" class="btn btn-primary" value="Search" />
+    </div>
+  </form>
+</div>
+{% if not members %}
+
+<span class="news-empty">No results</span>
+
+{% else %}
+<div>
+  <h2>Members</h2>
+</div>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-hover" id="members_table">
+      <tr>
+        <th>User ID</th>
+        <th>User Name</th>
+        <th>Full Name</th>
+        <th>Date of Birth</th>
+        <th>Address</th>
+        <th>Due Date</th>
+        <th>Subscription Status</th>
+        <th></th>
+      </tr>
+
+      {% for result in members %}
+      <tr>
+        <td>{{result[0]}}</td>
+        <td>{{result[1]}}</td>
+        {% set fullname = result[2]+" "+result[3] %}
+        <td>{{ fullname }}</td>
+        <td>
+            {% if result[4] == None %}
+            <span></span>
+            {% else %}
+            {{result[4]}}
+        </td>
+        {% endif %} 
+        <td>
+          {% set address = result[5]+" "+result[6]+" "+result[7]+" "+result[8]+" "+result[9] %} 
+          {% if address == None %} 
+          <span></span>
+          {% else %} 
+          {{ address }}
+        </td> 
+        {% endif %}
+
+          {% if todaydate is not none and result[10] is not none %} 
+          {% set date_diff = (result[10] - todaydate).days %}
+          {% if date_diff < 0 %} 
+          <td>
+            <span class="text-danger">{{ result[10].strftime('%d/%m/%Y') }}</span> 
+          </td>
+          <td>
+            <span class="text-danger">Expired</span>
+          </td>
+          {% elif date_diff < 14 %} 
+          <td>
+            <span class="text-warning">{{ result[10].strftime('%d/%m/%Y') }}</span> 
+          </td>
+          <td>
+            <span class="text-warning">Due in 14 days</span>
+          </td>
+          {% else %} 
+          <td>
+          {{ result[10].strftime('%d/%m/%Y') }}
+          </td>
+          <td><span>Current</span></td>
+          {% endif %} 
+          {% else %} 
+          <td></td>
+          <td></td>
+          {% endif %}
+        
+        <td>
+          {% if result[11] == 1 %}
+          <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+          data-bs-target="#deactivateConfirmation{{result[0]}}">Deactivate</button>
+          {% else %}
+          <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+            data-bs-target="#deactivateConfirmation{{result[0]}}">Activate</button>
+          {% endif %}
+          <a href="/admin/manage_member/edit/{{result[0]}}" class="btn btn-sm btn-outline-primary">Edit</a>        
+          <form action="/admin/manage_member/deactivate/{{result[0]}}" method="post">
+            <!-- Deactivate confirmation modal -->
+            <div class="modal fade" id="deactivateConfirmation{{result[0]}}" tabindex="-1" aria-labelledby="deactivateConfirmationLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deactivateConfirmationLabel">Confirm Activation/ Deactivation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure you want {% if result[11] == 1 %} deactivate {% else %} activate {% endif %} this member?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    {% if result[11] == 1 %}
+                    <button type="submit" class="btn btn-danger">Deactivate</a>
+                    {% else %}
+                    <button type="submit" class="btn btn-success">Activate</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </td>
+      </tr> 
+      
+      {% endfor %}
+    </table> 
+  </div>
+</div>
+{% endif %}
+<div class="row mt-3">
+  <div class="col-auto">
+    <button onclick="history.back()" class="btn btn-outline-primary"> Go Back </button>
+  </div>
+</div> 
+{% endblock %}
+

@@ -1,0 +1,92 @@
+{% extends "layout.html" %} {% block title %} Classes {% endblock %} {% block
+content %} {% if classes %}
+<h2>Classes conducted by {{ classes[0][0] }}</h2>
+{% endif %}
+
+<div class="dropdown">
+  <button
+    class="btn btn-outline-primary dropdown-toggle"
+    type="button"
+    id="dropdownMenuButton1"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    Filter dates...
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li>
+      <a
+        class="dropdown-item"
+        href="{{ url_for('view_trainer_classes', trainer=trainer, filter='all') }}"
+        >See all classes</a
+      >
+    </li>
+    <li>
+      <a
+        class="dropdown-item"
+        href="{{ url_for('view_trainer_classes', trainer=trainer, filter='7') }}"
+        >Next 7 days</a
+      >
+    </li>
+    <li>
+      <a
+        class="dropdown-item"
+        href="{{ url_for('view_trainer_classes', trainer=trainer, filter='14') }}"
+        >Next 14 days</a
+      >
+    </li>
+    <li>
+      <a
+        class="dropdown-item"
+        href="{{ url_for('view_trainer_classes', trainer=trainer, filter='21') }}"
+        >Next 21 days</a
+      >
+    </li>
+  </ul>
+</div>
+
+<br />
+{% if "all" in request.url %}
+<small>Showing all classes...</small>{% else %}{% endif %} {% if trainer + "/7"
+in request.url %} <small>Showing next 7 days...</small>{% else %}{% endif %} {%
+if trainer + "/14" in request.url %} <small>Showing next 14 days...</small>{%
+else %}{% endif %} {% if trainer + "/21" in request.url %}
+<small>Showing next 21 days...</small>{% else %}{% endif %}
+
+<table class="table table-hover">
+  <tr class="table">
+    <th>Class ID</th>
+    <th>Class Name</th>
+    <th>Class type</th>
+    <th>Room ID</th>
+    <th>Room Name</th>
+    <th>Start Date</th>
+    <th>Start Time</th>
+    <th>End Date</th>
+    <th>End Time</th>
+  </tr>
+  {% for class in classes %}
+  <tr>
+    <td>{{ class[1] }}</td>
+    <td>{{ class[2] }}</td>
+    <td>{{ class[3] }}</td>
+    <td>{{ class[4] }}</td>
+    <td>{{ class[5] }}</td>
+    <td>{{ class[6].strftime('%d/%m/%Y') }}</td>
+    <td>{{ class[7] }}</td>
+    <td>{{ class[8].strftime('%d/%m/%Y') }}</td>
+    <td>{{ class[9] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div class="row">
+  <div class="col-auto">
+    <button onclick="history.back()" class="btn btn-outline-primary">
+      Go Back
+    </button>
+    <a class="btn btn-primary" href="{{ url_for('dashboard') }}">Dashboard</a>
+  </div>
+</div>
+
+{% endblock %}

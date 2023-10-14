@@ -1,0 +1,22 @@
+{% extends "layout.html" %} {% block title %} Attendance {% endblock %} {%
+    block content %}
+    <div>
+        <h2>Gym Attendees List</h2>
+    </div>
+        <table class="table table-hover">
+        {% for result in attendee_gym %}
+
+        <tr>
+        <td>{{result[0]}} {{result[1]}}</td>
+        </tr>
+     
+        {% endfor %}
+      </table> 
+   
+    <div class="row mt-3">
+      <div class="col-auto">
+        <button onclick="history.back()" class="btn btn-outline-primary"> Go Back </button>
+      </div>
+    </div> 
+    {% endblock %}
+

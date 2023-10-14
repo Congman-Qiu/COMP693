@@ -1,0 +1,74 @@
+{% extends "layout.html" %} {% block title %} Financial Report {% endblock %} {% block content %} 
+<div class="row">
+    <h2>Financial Report - This Month (First day to date)</h2>
+
+    <div class="col-md-6 mt-3">
+        <div class="card">
+            <h5 class="card-header">Revenue:</h5>
+            <div class="card-body">
+                <table class="table table-hover"> {% for subfees in subfeeslist %} <tr>
+                        <th>Total Memberships:</th>
+                        <td>{{subfees[0]}}</td>
+                        <th>Membership fees:</th>
+                        <td>${{subfees[1]}}</td>
+                    </tr> {% endfor %} {% for trainingfees in trainingfeeslist %} <tr>
+                        <th>Personal trainings:</th>
+                        <td>{{trainingfees[0]}}</td>
+                        <th>Personal training fees:</th>
+                        <td>${{trainingfees[1]}}</td>
+                    </tr> {% endfor %} <tr>
+                        <th>Retail sales:</th>
+                        <td></td>
+                        <td></td>
+                        <td>$100</td>
+                    </tr>
+                    <tr style="background-color: #bedfc6; font-weight: bold;border-color: #FFF !important;">
+                        <th>Total Revenue:</th>
+                        <td></td>
+                        <td></td>
+                        <td>${{total_revenue}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mt-3">
+        <div class="card">
+            <h5 class="card-header">Expenses:</h5>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Rent:</th>
+                        <td>$150</td>
+                    </tr>
+                    <tr>
+                        <th>Utilities:</th>
+                        <td>$100</td>
+                    </tr>
+                    <tr>
+                        <th>Salaries and wages:</th>
+                        <td>$100</td>
+                    </tr>
+                    <tr>
+                        <th>Equipment maintenance:</th>
+                        <td>$50</td>
+                    </tr>
+                    <tr>
+                        <th>Marketing and advertising:</th>
+                        <td>$50</td>
+                    </tr>
+                    <tr>
+                        <th>Insurance:</th>
+                        <td>$150</td>
+                    </tr>
+                    <tr style="background-color: #f7d8d8; font-weight: bold;border-color: #FFF !important;">
+                        <th>Total Expenses:</th>
+                        <td>$600</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endblock %}

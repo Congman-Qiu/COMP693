@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %} Process Payments {% endblock %}
+{% block content %}
+<h2>Process Payments</h2>
+<div class="card">
+   <div class="card-body">
+      <div class="mb-4 mt-3">
+         <form class="row g-3" method="post" action="/admin/process_payment">
+            <div class="col-auto">
+               <input type="text" class="form-control" name="search" placeholder="Member ID or Name" required>
+            </div>
+            <div class="col-auto">
+               <input type="submit" class="btn btn-primary" value="Search">
+            </div>
+         </form>
+      </div>
+      {% if membersubscription %} 
+      <div class="col-md-6">
+         <h5>Member details</h5>
+         <hr>
+         <table class="table table-hover">
+            <tr>
+               <th nowrap>Member ID</th>
+               <th nowrap>Member Name</th>
+               <th></th>
+            </tr>
+            {% for user in membersubscription %} 
+            <tr>
+               <td>{{user[0]}}</td>
+               <td>{{user[1]}} {{user[2]}}</td>
+               <td>
+                  <a href="/subscription?user_id={{user[0]}}&add_subscription=1" class="btn btn-sm btn-warning">Pay</a>
+               </td>
+            </tr>
+            {% endfor %}
+         </table>
+      </div>
+      {% endif %}
+   </div>
+</div>
+<div class="row mt-3">
+   <div class="col-auto">
+      <button onclick="history.back()" class="btn btn-outline-primary">
+      Go Back
+      </button>
+   </div>
+</div>
+{% endblock %}

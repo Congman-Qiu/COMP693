@@ -1,0 +1,96 @@
+{% extends "layout.html" %} {% block title %} Search Member {% endblock %} {% block content %} 
+{% for member in memberlist %} 
+
+<form class="row g-3" method="post" action="/admin/manage_member/deactivate/{{member[0]}}">
+
+{% endfor %}
+{% if memberlist %} <div>
+<br>
+<h2>Member details</h2>
+</div>
+<table class="table table-hover">
+<tr>
+<th nowrap>User ID</th>
+<th nowrap>User Name</th>
+<th nowrap>Type of User</th>
+<th nowrap>First Name</th>
+<th nowrap>Family Name</th>
+<th nowrap>Date of Birth</th>
+<th nowrap>Street Number/Property Name</th>
+<th nowrap>Street Name</th>
+<th>Town</th>
+<th>City</th>
+<th>Postcode</th>
+<th nowrap>Bank Account</th>
+</tr> 
+{% for member in memberlist %} 
+<tr>
+<td>{{member[0]}}</td>
+<td>{{member[1]}}</td>
+<td>{{member[2]}}</td>
+<td>{{member[3]}}</td>
+<td>{{member[4]}}</td>
+<td>{{member[5]}}</td>
+<td>{{member[6]}}</td>
+<td>{{member[7]}}</td>
+<td>{{member[8]}}</td>
+<td>{{member[9]}}</td>
+<td>{{member[10]}}</td>
+<td>{{member[11]}}</td>
+</tr> {% endfor %}
+</table> {% endif %} 
+<div class="col-md-1">
+<button
+   type="button"
+   class="btn btn-secondary"
+   data-bs-toggle="modal"
+   data-bs-target="#myModal"
+   >
+Deactivate
+</button>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+<div class="modal-dialog">
+<div class="modal-content">
+<!-- Modal Header -->
+<div class="modal-header">
+<h4 class="modal-title">Deactivate Member</h4>
+<button
+   type="button"
+   class="btn-close"
+   data-bs-dismiss="modal"
+   ></button>
+</div>
+<!-- Modal body -->
+<div class="modal-body">
+Please confirm if you want to deactivate this member!
+</div>
+<!-- Modal footer -->
+<div class="modal-footer">
+<button
+   type="button"
+   class="btn btn-danger"
+   data-bs-dismiss="modal"
+   >
+Close
+</button>
+<button
+   type="submit"
+   value="Submit"
+   name="submit"
+   class="btn btn-primary"
+   >
+Confirm
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-1">
+<a class="btn btn-outline-secondary" href="{{ url_for('dashboard') }}"
+   >Cancel</a
+   >
+</div>
+</form>
+{% endblock %}

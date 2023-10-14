@@ -1,0 +1,105 @@
+.card-header {
+  background: #4b3976 !important;
+  color: #fff !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  font-size: medium !important;
+}
+
+.btn-primary {
+  background: #4b3976 !important;
+  border: 1px solid #4b3976 !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover {
+  background: #ffffff !important;
+  border: 1px solid #4b3976 !important;
+  color: #4b3976 !important;
+}
+
+.btn-warning {
+  background: #f39a3a !important;
+  border: 1px solid #f39a3a !important;
+  color: #fff !important;
+}
+
+.btn-warning:hover {
+  background: #ffffff !important;
+  border: 1px solid #f39a3a !important;
+  color: #f39a3a !important;
+}
+
+.btn-outline-primary {
+  background: #ffffff !important;
+  border: 1px solid #4b3976 !important;
+  color: #4b3976 !important;
+}
+
+.btn-outline-primary:hover {
+  background: #4b3976 !important;
+  border: 1px solid #4b3976 !important;
+  color: #fff !important;
+}
+
+.lf-navbar{
+    background-color: #f8f2ff !important;
+    border-radius: 5px !important;
+    border: 1px solid #ccc !important;
+}
+
+.form-control{
+    border : 1px solid #f1e5fc !important;
+}
+
+.form-control:focus {
+    color: #212529 !important;
+    background-color: #fff !important;
+    border-color: #f8f2ff !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.25rem #f8f2ff !important;
+}
+
+.site-title-home{
+    color: #4b3976 !important;
+}
+
+.site-subtitle-home{
+    color: #f39a3a !important;
+}
+
+.navbar{
+    background: #4b3976 !important;
+    border: 1px solid #4b3976 !important;
+}
+
+.navbar-brand{
+    color: #fff !important;
+}
+
+.navbar-brand:hover{
+    color: #d7cded !important;
+}
+
+.nav-link{
+    color: #fff !important;
+}
+
+.nav-link:hover{
+    color: #d7cded !important;
+}
+
+.form-label{
+  color: #757575 !important;
+  font-size: small !important;
+}
+
+.lf-link{
+  color: #4b3976 !important;
+  text-decoration: none !important;
+}
+
+.lf-link:hover{
+  color: #d7cded !important;
+  text-decoration: none !important;
+}

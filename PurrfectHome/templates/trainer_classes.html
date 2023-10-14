@@ -1,0 +1,64 @@
+{% extends "layout.html" %} {% block title %} My Sessions {% endblock %} {% block content %} 
+{% if class_type == "classes" %}
+<h2>Exercise Classes</h2>
+{% else %}
+<h2>Specialised Training Sessions</h2>
+{% endif %}
+
+<br />
+
+{% if classes %} 
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+                <h5 class="card-header">{% if class_type == "classes" %}Class Details{% else %}Training Session Details {% endif %}</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <span><b>Class</b></span>
+                        <span class="badge badg text-bg-light personal-details mb-1">{{class_detail[0]}}</span> <br>
+                        <span><b>Date</b></span>
+                        <span class="badge badg text-bg-light personal-details mb-1">{{class_detail[1].strftime('%d/%m/%Y')}}</span> <br>
+                        <span><b>Time</b></span>
+                        <span class="badge badg text-bg-light personal-details mb-1">{{class_detail[2]}}</span> <br>
+                    </div>
+                    <div class="col-md-6">
+                        <span><b>Room</b></span>
+                        <span class="badge badg text-bg-light personal-details mb-1">{{class_detail[3]}}</span> <br>
+                        {% if class_type == "classes" %}
+                        <span><b>Capacity</b></span>
+                        <span class="badge badg text-bg-light personal-details mb-1">{{class_detail[4]}}</span> <br>
+                        <span><b>Spaces Left</b></span>
+                        <span class="badge badg text-bg-light personal-details mb-1">{{class_detail[5]}}</span> <br>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <h5 class="card-header">Trainees Attending</h5>
+            <div class="card-body">
+                <ul class="list-group">
+                    {% for class in classes %}
+                    {% if class[7] %}
+                    <li class="list-group-item"><a class="lf-link" href="{{ url_for('view_member', userid=class[6]) }}">{{class[7]}}</a></li>
+                    {% else %}
+                    <span class="news-empty">No enrollments yet.</span>
+                    {% endif %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %} 
+<span class="news-empty">No sessions found.</span> 
+{% endif %} 
+<div class="col-auto mt-3">
+    <button onclick="history.back()" class="btn btn-outline-primary"> Go Back </button>
+</div> 
+{% endblock %}
